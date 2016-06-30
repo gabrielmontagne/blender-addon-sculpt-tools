@@ -30,7 +30,7 @@ class MaskExtractOperator(bpy.types.Operator):
             context.selected_objects[0].name.startswith("Extracted."):
             rem = context.selected_objects[0]
             remname = rem.data.name
-            bpy.data.scenes[0].objects.unlink(rem)
+            bpy.data.scenes.get(context.scene.name).objects.unlink(rem)
             bpy.data.objects.remove(rem)
             # remove mesh to prevent memory being cluttered up with hundreds of high-poly objects
             bpy.data.meshes.remove(bpy.data.meshes[remname])

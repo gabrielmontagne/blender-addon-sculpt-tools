@@ -108,7 +108,7 @@ class RemeshOperator(bpy.types.Operator):
             md2.target = obCopy
             bpy.ops.object.modifier_apply(apply_as='DATA', modifier="RemeshShrinkwrap")
             
-            bpy.data.scenes[0].objects.unlink(obCopy)
+            bpy.data.scenes.get(context.scene.name).objects.unlink(obCopy)
             bpy.data.objects.remove(obCopy)
         
         if wm.useAutoDecimate == True:

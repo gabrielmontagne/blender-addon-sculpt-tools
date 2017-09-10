@@ -27,7 +27,7 @@ class BooleanUnionOperator(bpy.types.Operator):
                 md.object = SelectedObject       
                 # apply the modifier
                 bpy.ops.object.modifier_apply(apply_as='DATA', modifier="booleanunion")
-                bpy.data.scenes[0].objects.unlink(SelectedObject)
+                bpy.data.scenes.get(context.scene.name).objects.unlink(SelectedObject)
                 bpy.data.objects.remove(SelectedObject)
         
         return {'FINISHED'}
@@ -61,7 +61,7 @@ class BooleanDifferenceOperator(bpy.types.Operator):
                 md.object = SelectedObject       
                 # apply the modifier
                 bpy.ops.object.modifier_apply(apply_as='DATA', modifier="booleandifference")
-                bpy.data.scenes[0].objects.unlink(SelectedObject)
+                bpy.data.scenes.get(context.scene.name).objects.unlink(SelectedObject)
                 bpy.data.objects.remove(SelectedObject)
         
         return {'FINISHED'}
@@ -96,7 +96,7 @@ class BooleanIntersectOperator(bpy.types.Operator):
                 
                 # apply the modifier
                 bpy.ops.object.modifier_apply(apply_as='DATA', modifier="booleanintersect")
-                bpy.data.scenes[0].objects.unlink(SelectedObject)
+                bpy.data.scenes.get(context.scene.name).objects.unlink(SelectedObject)
                 bpy.data.objects.remove(SelectedObject)
         
         return {'FINISHED'}
@@ -174,7 +174,7 @@ class BooleanSeparateOperator(bpy.types.Operator):
                 helper.objSelectFaces(SelectedObject, 'INVERT')
                 
                 #delete the copy of the active object
-                bpy.data.scenes[0].objects.unlink(activeObjCopy)
+                bpy.data.scenes.get(context.scene.name).objects.unlink(activeObjCopy)
                 bpy.data.objects.remove(activeObjCopy)
         
         helper.objSelectFaces(SelectedObjCopy, 'SELECT')
@@ -189,7 +189,7 @@ class BooleanSeparateOperator(bpy.types.Operator):
         bpy.ops.object.modifier_apply(apply_as='DATA', modifier="sepDifference")
         
         #delete the copy of the selected object
-        bpy.data.scenes[0].objects.unlink(SelectedObjCopy)
+        bpy.data.scenes.get(context.scene.name).objects.unlink(SelectedObjCopy)
         bpy.data.objects.remove(SelectedObjCopy)
         
         bpy.context.active_object.select = True

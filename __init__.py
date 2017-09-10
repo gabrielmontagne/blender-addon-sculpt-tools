@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Sculpt Tools UI",
-    "author": "Ian Lloyd Dela Cruz, Nicholas Bishop, Roberto Roch, Bartosz Styperek, Piotr Adamowicz",
-    "version": (1, 0),
+    "author": "Ian Lloyd Dela Cruz, Nicholas Bishop, Roberto Roch, Bartosz Styperek, Piotr Adamowicz, Kent Trammell",
+    "version": (1, 1),
     "blender": (2, 7, 0),
     "location": "3d View > Tool shelf, Shift-Ctrl-B",
     "description": "Simple UI for Boolean and Remesh operators",
@@ -58,6 +58,10 @@ class RemeshBooleanPanel(bpy.types.Panel):
         row_rem2 = layout.row(align=True)
         row_rem2.alignment = 'EXPAND'
         row_rem2.prop(wm, 'remeshPreserveShape', text="Preserve Shape")
+        row_rem2 = layout.row(align=True)
+        row_rem2.prop(wm, 'useAutoDecimate', text="Decimate")
+        if wm.useAutoDecimate == True:
+            row_rem2.prop(wm, "autoDecimateRatio", text="Ratio")
             
         layout.separator()
         row_freeze = layout.row(align=True)
@@ -120,6 +124,8 @@ class RemeshBooleanPanel(bpy.types.Panel):
             boxrow = box.row(align=True)
             boxrow.prop(edit, "use_grease_pencil_smooth_stroke", text="Smooth")
             boxrow.prop(edit, "use_grease_pencil_simplify_stroke", text="Simplify")
+            boxrow = box.row(align=True)
+            boxrow.prop(wm, "useSubtractMode", text="Subtract")
             box.separator()                                         
             box.operator("boolean.purge_pencils", text='Purge All Grease Pencils')
         
@@ -192,6 +198,9 @@ def register():
     bpy.types.WindowManager.remeshDepthInt = IntProperty(min = 2, max = 10, default = 4)
     bpy.types.WindowManager.remeshSubdivisions = IntProperty(min = 0, max = 6, default = 0)
     bpy.types.WindowManager.remeshPreserveShape = BoolProperty(default = True)
+    bpy.types.WindowManager.useAutoDecimate = BoolProperty(default = False)
+    bpy.types.WindowManager.autoDecimateRatio = FloatProperty(min = 0.00, max = 1.00, default = 0.10)
+    bpy.types.WindowManager.useSubtractMode = BoolProperty(default = True)
 
     bpy.types.WindowManager.extractDepthFloat = FloatProperty(min = -10.0, max = 10.0, default = 0.1)
     bpy.types.WindowManager.extractOffsetFloat = FloatProperty(min = -10.0, max = 10.0, default = 0.0)

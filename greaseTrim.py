@@ -18,6 +18,12 @@ class GreaseTrim(bpy.types.Operator):
         # objBBDiagonal = objBBDiagonal*2
         subdivisions = 32
 
+        wm = bpy.context.window_manager
+        noDel = []
+        for ob in bpy.data.objects:
+            if ob.hide == False:
+                noDel.append(ob)
+
         if len(bpy.context.selected_objects)==1:
             try:
                 mesh = bpy.context.active_object
@@ -92,6 +98,12 @@ class GreaseTrim(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='OBJECT')
         bpy.context.scene.objects.active = mesh
         bpy.ops.boolean.separate()
+
+        if wm.useSubtractMode:
+            for ob in bpy.data.objects:
+                if ob not in noDel:
+                    bpy.data.scenes[0].objects.unlink(ob)
+                    bpy.data.objects.remove(ob)
     
         return {'FINISHED'}
 

@@ -122,7 +122,6 @@ class RemeshBooleanPanel(bpy.types.Panel):
             box.prop(edit, "grease_pencil_manhattan_distance", text="Manhattan Distance")
             box.prop(edit, "grease_pencil_euclidean_distance", text="Euclidean Distance")
             boxrow = box.row(align=True)
-            boxrow.prop(edit, "use_grease_pencil_smooth_stroke", text="Smooth")
             boxrow.prop(edit, "use_grease_pencil_simplify_stroke", text="Simplify")
             boxrow = box.row(align=True)
             boxrow.prop(wm, "useSubtractMode", text="Subtract")
